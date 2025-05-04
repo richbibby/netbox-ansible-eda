@@ -6,9 +6,9 @@
 ## Netbox Inventory Plugin Fix
 If you're using Netbox in a subdirectory and encounter path-related errors with the inventory plugin, you'll need to apply a fix to the plugin. This is a known issue when Netbox is not installed at the root of the web server.
 
-1. Locate the inventory plugin file:
+1. Locate the inventory plugin file in your virtual environment:
 ```bash
-find ~/.ansible/collections/ansible_collections/netbox/netbox/plugins/inventory/ -name "nb_inventory.py"
+find ./venv/lib/python*/site-packages/ansible_collections/netbox/netbox/plugins/inventory/ -name "nb_inventory.py"
 ```
 
 2. Edit the file and add the following code just before `self.api_version = version.parse(netbox_api_version)`:
