@@ -1,0 +1,29 @@
+---
+- name: Extract Syslog servers from NetBox inventory config_context
+  set_fact:
+    syslog_servers: "{{ hostvars[inventory_hostname].config_context[0].syslog_servers | default([]) }}"
+
+- name: Render Syslog configuration using Jinja2 template
+  template:
+    src: syslog_config.j2
+    dest: /tmp/syslog_config_{{ inventory_hostname }}.yml
+
+- name: Apply syslog configuration to Cisco IOS devices
+  when: ansible_network_os == 'ios'
+  cisco.ios.ios_logging_global:
+    config: "{{ lookup('file', '/tmp/syslog_config_{{ inventory_hostname }}.yml') | from_yaml }}"
+    state: replaced
+
+# - name: Retrieve running configuration logging section
+#   cisco.ios.ios_command:
+#     commands: ["show running-config | section logging"]
+#   register: syslog_config
+
+# - name: Display syslog configuration
+#   debug:
+#     var: syslog_config.stdout_lines
+
+- name: Remove temporary syslog configuration files
+  file:
+    path: "/tmp/syslog_config_{{ inventory_hostname }}.yml"
+    state: absent

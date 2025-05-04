@@ -1,0 +1,29 @@
+---
+- name: Extract Name servers from NetBox inventory config_context
+  set_fact:
+    name_servers: "{{ hostvars[inventory_hostname].config_context[0].name_servers | default([]) }}"
+
+- name: Render Name Server configuration using Jinja2 template
+  template:
+    src: name_server_config.j2
+    dest: /tmp/name_server_config_{{ inventory_hostname }}.yml
+
+- name: Apply Name Server configuration to Cisco IOS devices
+  when: ansible_network_os == 'ios'
+  cisco.ios.ios_system:
+    name_servers: "{{ lookup('file', '/tmp/name_server_config_{{ inventory_hostname }}.yml') | from_yaml }}"
+    state: present
+
+# - name: Retrieve running configuration Name section
+#   cisco.ios.ios_command:
+#     commands: ["show running-config | section name-server"]
+#   register: name_server_config
+
+# - name: Display Name Server configuration
+#   debug:
+#     var: name_server_config.stdout_lines
+
+- name: Remove temporary Name Server configuration files
+  file:
+    path: "/tmp/name_server_config_{{ inventory_hostname }}.yml"
+    state: absent
