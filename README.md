@@ -47,9 +47,20 @@ export NETBOX_TOKEN=<your-netbox-token>
 
 ## Usage
 
-1. Start the EDA rulebook:
+1. Test the Netbox inventory configuration:
 ```bash
-ansible-rulebook -r netbox-webhooks.yml -i netbox_inv.yml --verbose 
+ansible-inventory -i netbox_inv.yml --list
+```
+This command will verify that your Netbox inventory plugin is working correctly and show you the hosts and groups that will be available to your playbooks.
+
+2. Start the EDA rulebook:
+```bash
+ansible-rulebook --rulebook rulebooks/netbox.yml -i inventory.yml --vars env.yml
+```
+
+3. Monitor the EDA logs for events:
+```bash
+tail -f ansible-rulebook.log
 ```
 
 ## Netbox Inventory Plugin Fix
