@@ -5,11 +5,8 @@
     domain_name: "{{ hostvars[inventory_hostname].config_context[0].domain_name[0] }}"
     state: present
 
-# - name: Retrieve running configuration Domain Name section
-#   cisco.ios.ios_command:
-#     commands: ["show running-config | section ip domain name"]
-#   register: domain_name_config
-
-# - name: Display Name Server configuration
-#   debug:
-#     var: domain_name_config.stdout_lines
+- name: Apply Name Server configuration to Arista EOS devices
+  when: ansible_network_os == 'eos'
+  arista.eos.eos_system:
+    domain_name: "{{ hostvars[inventory_hostname].config_context[0].domain_name[0] }}"
+    state: present

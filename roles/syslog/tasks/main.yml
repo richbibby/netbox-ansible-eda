@@ -14,14 +14,11 @@
     config: "{{ lookup('file', '/tmp/syslog_config_{{ inventory_hostname }}.yml') | from_yaml }}"
     state: replaced
 
-# - name: Retrieve running configuration logging section
-#   cisco.ios.ios_command:
-#     commands: ["show running-config | section logging"]
-#   register: syslog_config
-
-# - name: Display syslog configuration
-#   debug:
-#     var: syslog_config.stdout_lines
+- name: Apply syslog configuration to Arista EOS devices
+  when: ansible_network_os == 'eos'
+  arista.eos.eos_logging_global:
+    config: "{{ lookup('file', '/tmp/syslog_config_{{ inventory_hostname }}.yml') | from_yaml }}"
+    state: replaced
 
 - name: Remove temporary syslog configuration files
   file:

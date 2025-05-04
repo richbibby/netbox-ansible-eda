@@ -14,14 +14,11 @@
     config: "{{ lookup('file', '/tmp/ntp_config_{{ inventory_hostname }}.yml') | from_yaml }}"
     state: replaced
 
-# - name: Retrieve running configuration NTP section
-#   cisco.ios.ios_command:
-#     commands: ["show running-config | section ntp"]
-#   register: ntp_config
-
-# - name: Display NTP configuration
-#   debug:
-#     var: ntp_config.stdout_lines
+- name: Apply NTP configuration to Arista EOS devices
+  when: ansible_network_os == 'eos'
+  arista.eos.eos_ntp_global:
+    config: "{{ lookup('file', '/tmp/ntp_config_{{ inventory_hostname }}.yml') | from_yaml }}"
+    state: replaced
 
 - name: Remove temporary NTP configuration files
   file:
