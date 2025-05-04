@@ -3,9 +3,16 @@
   set_fact:
     syslog_servers: "{{ hostvars[inventory_hostname].config_context[0].syslog_servers | default([]) }}"
 
-- name: Render Syslog configuration using Jinja2 template
+- name: Render Arista EOS Syslog configuration using Jinja2 template
+  when: ansible_network_os == 'eos'
   template:
-    src: syslog_config.j2
+    src: syslog_config_eos.j2
+    dest: /tmp/syslog_config_{{ inventory_hostname }}.yml
+
+- name: Render Cisco IOS Syslog configuration using Jinja2 template
+  when: ansible_network_os == 'ios'
+  template:
+    src: syslog_config_ios.j2
     dest: /tmp/syslog_config_{{ inventory_hostname }}.yml
 
 - name: Apply syslog configuration to Cisco IOS devices
