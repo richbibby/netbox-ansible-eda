@@ -1,0 +1,11 @@
+---
+- name: Configure Network Services - NTP Servers, Syslog Servers and Login Banner on network devices using NetBox data
+  connection: network_cli
+  hosts: sites_amsterdam
+  gather_facts: no
+
+  roles:
+    - role: ntp
+    - role: syslog
+    - role: name-servers
+    - role: domain-name
