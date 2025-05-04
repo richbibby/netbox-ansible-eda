@@ -1,5 +1,6 @@
 plugin: netbox.netbox.nb_inventory
 validate_certs: False
+config_context: true
 
 compose:
   ansible_network_os: platform.slug
