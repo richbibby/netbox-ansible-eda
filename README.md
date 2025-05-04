@@ -55,12 +55,7 @@ This command will verify that your Netbox inventory plugin is working correctly 
 
 2. Start the EDA rulebook:
 ```bash
-ansible-rulebook --rulebook rulebooks/netbox.yml -i inventory.yml --vars env.yml
-```
-
-3. Monitor the EDA logs for events:
-```bash
-tail -f ansible-rulebook.log
+ansible-rulebook -r netbox-webhooks.yml -i netbox_inv.yml --verbose
 ```
 
 ## Netbox Inventory Plugin Fix
