@@ -1,5 +1,14 @@
 # netbox-ansible-eda
 
+A project that demonstrates the integration between Netbox and Ansible Event-Driven Automation (EDA). This setup allows you to automatically trigger Ansible playbooks based on events in your Netbox instance.
+
+## Prerequisites
+
+- Python 3.8 or higher
+- Ansible 2.9 or higher
+- Netbox instance with API access
+- Ubuntu/Debian-based system (for apt commands)
+
 ## Getting Started
 
 1. Clone the repository:
@@ -20,20 +29,27 @@ sudo apt update
 sudo apt install openjdk-17-jdk -y
 ```
 
-4. Install Ansible EDA collection:
-```bash
-ansible-galaxy collection install ansible.eda
-```
-
-5. Install Python dependencies:
+4. Install Python dependencies:
 ```bash
 pip install -r requirements.txt
+```
+
+5. Install Ansible EDA collection:
+```bash
+ansible-galaxy collection install ansible.eda
 ```
 
 6. Set up Netbox environment variables:
 ```bash
 export NETBOX_API=<your-netbox-url>
 export NETBOX_TOKEN=<your-netbox-token>
+```
+
+## Usage
+
+1. Start the EDA rulebook:
+```bash
+ansible-rulebook -r netbox-webhooks.yml -i netbox_inv.yml --verbose 
 ```
 
 ## Netbox Inventory Plugin Fix
@@ -51,3 +67,34 @@ openapi["paths"] = {re.sub(prefix, "/", k): v for k, v in openapi["paths"].items
 ```
 
 This fix handles cases where the OpenAPI paths include the full server URL prefix, which can cause issues with API endpoint matching.
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Inventory Plugin Errors**
+   - Ensure your Netbox API token has the correct permissions
+   - Verify the API endpoint URL is correct
+   - Check if the Netbox inventory plugin fix has been applied
+
+2. **EDA Connection Issues**
+   - Verify the environment variables are set correctly
+   - Check the EDA logs for detailed error messages
+   - Ensure the Netbox API is accessible from your machine
+
+3. **Python Package Issues**
+   - Make sure you're in the virtual environment
+   - Try upgrading pip: `pip install --upgrade pip`
+   - Reinstall requirements: `pip install -r requirements.txt --force-reinstall`
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
