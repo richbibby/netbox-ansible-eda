@@ -10,28 +10,28 @@
 
 # NTP
   - name: NTP configuration updated in a merged branch
-    condition: event.payload.event == "job_ended" and event.payload.model == "branch" and event.payload.data.log is search("ntp_servers updated", ignorecase=true)
+    condition: event.payload.event == "job_ended" and event.payload.model == "branch" and event.payload.data.log is search("NTP Servers updated", ignorecase=true)
     action:
       run_playbook:
         name: configure-ntp.yml
 
 # Syslog
   - name: Syslog configuration updated in a merged branch
-    condition: event.payload.event == "job_ended" and event.payload.model == "branch" and event.payload.data.log is search("syslog_servers updated", ignorecase=true)
+    condition: event.payload.event == "job_ended" and event.payload.model == "branch" and event.payload.data.log is search("Syslog Servers updated", ignorecase=true)
     action:
       run_playbook:
         name: configure-syslog.yml
 
 # Name Servers
   - name: Name Servers configuration updated in a merged branch
-    condition: event.payload.event == "job_ended" and event.payload.model == "branch" and event.payload.data.log is search("name_servers updated", ignorecase=true)
+    condition: event.payload.event == "job_ended" and event.payload.model == "branch" and event.payload.data.log is search("Name Servers updated", ignorecase=true)
     action:
       run_playbook:
         name: configure-name-servers.yml
 
 # Domain Name
   - name: Domain Name configuration updated in a merged branch
-    condition: event.payload.event == "job_ended" and event.payload.model == "branch" and event.payload.data.log is search("domain_name updated", ignorecase=true)
+    condition: event.payload.event == "job_ended" and event.payload.model == "branch" and event.payload.data.log is search("Lab Domain updated", ignorecase=true)
     action:
       run_playbook:
         name: configure-domain-name.yml
