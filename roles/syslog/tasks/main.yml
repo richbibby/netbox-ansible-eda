@@ -9,23 +9,23 @@
     src: syslog_config_eos.j2
     dest: /tmp/syslog_config_{{ inventory_hostname }}.yml
 
-- name: Render Cisco IOS Syslog configuration using Jinja2 template
-  when: ansible_network_os == 'ios'
-  template:
-    src: syslog_config_ios.j2
-    dest: /tmp/syslog_config_{{ inventory_hostname }}.yml
+- name: Apply syslog configuration to Arista EOS devices
+  when: ansible_network_os == 'eos'
+  arista.eos.eos_logging_global:
+    config: "{{ lookup('file', '/tmp/syslog_config_{{ inventory_hostname }}.yml') | from_yaml }}"
+    state: replaced
+
+# - name: Render Cisco IOS Syslog configuration using Jinja2 template
+#   when: ansible_network_os == 'ios'
+#   template:
+#     src: syslog_config_ios.j2
+#     dest: /tmp/syslog_config_{{ inventory_hostname }}.yml
 
 # - name: Apply syslog configuration to Cisco IOS devices
 #   when: ansible_network_os == 'ios'
 #   cisco.ios.ios_logging_global:
 #     config: "{{ lookup('file', '/tmp/syslog_config_{{ inventory_hostname }}.yml') | from_yaml }}"
 #     state: replaced
-
-- name: Apply syslog configuration to Arista EOS devices
-  when: ansible_network_os == 'eos'
-  arista.eos.eos_logging_global:
-    config: "{{ lookup('file', '/tmp/syslog_config_{{ inventory_hostname }}.yml') | from_yaml }}"
-    state: replaced
 
 - name: Remove temporary syslog configuration files
   file:
