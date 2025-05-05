@@ -1,9 +1,9 @@
 ---
-- name: Apply Name Server configuration to Cisco IOS devices
-  when: ansible_network_os == 'ios'
-  cisco.ios.ios_system:
-    domain_name: "{{ hostvars[inventory_hostname].config_context[0].domain_name[0] }}"
-    state: present
+# - name: Apply Name Server configuration to Cisco IOS devices
+#   when: ansible_network_os == 'ios'
+#   cisco.ios.ios_system:
+#     domain_name: "{{ hostvars[inventory_hostname].config_context[0].domain_name[0] }}"
+#     state: present
 
 - name: Apply Name Server configuration to Arista EOS devices
   when: ansible_network_os == 'eos'

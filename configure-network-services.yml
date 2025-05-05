@@ -1,5 +1,5 @@
 ---
-- name: Configure Network Services - NTP Servers, Syslog Servers and Login Banner on network devices using NetBox data
+- name: Configure Network Services - NTP, Syslog, Name Servers and Domain Name on network devices using NetBox data
   connection: network_cli
   hosts: sites_lab
   gather_facts: no

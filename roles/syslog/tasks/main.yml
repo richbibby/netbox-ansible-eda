@@ -15,11 +15,11 @@
     src: syslog_config_ios.j2
     dest: /tmp/syslog_config_{{ inventory_hostname }}.yml
 
-- name: Apply syslog configuration to Cisco IOS devices
-  when: ansible_network_os == 'ios'
-  cisco.ios.ios_logging_global:
-    config: "{{ lookup('file', '/tmp/syslog_config_{{ inventory_hostname }}.yml') | from_yaml }}"
-    state: replaced
+# - name: Apply syslog configuration to Cisco IOS devices
+#   when: ansible_network_os == 'ios'
+#   cisco.ios.ios_logging_global:
+#     config: "{{ lookup('file', '/tmp/syslog_config_{{ inventory_hostname }}.yml') | from_yaml }}"
+#     state: replaced
 
 - name: Apply syslog configuration to Arista EOS devices
   when: ansible_network_os == 'eos'

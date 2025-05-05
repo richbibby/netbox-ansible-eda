@@ -8,11 +8,11 @@
     src: name_server_config.j2
     dest: /tmp/name_server_config_{{ inventory_hostname }}.yml
 
-- name: Apply Name Server configuration to Cisco IOS devices
-  when: ansible_network_os == 'ios'
-  cisco.ios.ios_system:
-    name_servers: "{{ lookup('file', '/tmp/name_server_config_{{ inventory_hostname }}.yml') | from_yaml }}"
-    state: present
+# - name: Apply Name Server configuration to Cisco IOS devices
+#   when: ansible_network_os == 'ios'
+#   cisco.ios.ios_system:
+#     name_servers: "{{ lookup('file', '/tmp/name_server_config_{{ inventory_hostname }}.yml') | from_yaml }}"
+#     state: present
 
 - name: Apply Name Server configuration to Arista EOS devices
   when: ansible_network_os == 'eos'

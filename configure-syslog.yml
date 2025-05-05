@@ -1,0 +1,8 @@
+---
+- name: Configure Syslog Servers network devices using NetBox data
+  connection: network_cli
+  hosts: sites_lab
+  gather_facts: no
+
+  roles:
+    - role: syslog
